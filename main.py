@@ -104,5 +104,5 @@ def compare():
     return render_template('compare.html', filters=filters, results2=results2)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
