@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IE Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        input {
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        #filter {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Styling for dropdown arrow */
+        #filter::-ms-expand {
+            display: none;
+        }
+
+        #filter option {
+            background-color: #fff;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>IE Search</h1>
+    <form action="/search" method="get">
+    <label for="query">Search for fields:</label>
+    <input type="text" id="query" name="query" required>
+    <select name="filter" id="filter">
+    <option value="" selected disabled>Select a filter</option>
+    {% for item in filters %}
+        <option value="{{ item }}">{{ item }}</option>
+    {% endfor %}
+</select>
+    <button type="submit">Search</button>
+</form>
+</body>
+</html>

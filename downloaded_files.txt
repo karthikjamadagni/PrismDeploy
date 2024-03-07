@@ -1,0 +1,5 @@
+3gpp_specs\38331-h00.zip
+3gpp_specs\38331-h10.zip
+3gpp_specs\38331-h20.zip
+3gpp_specs\38331-h30.zip
+3gpp_specs\38331-h40.zip

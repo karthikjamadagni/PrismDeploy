@@ -1,0 +1,6 @@
+Flask
+difflib
+requests
+beautifulsoup4
+wget
+docx
