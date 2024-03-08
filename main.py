@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 from difflib import ndiff
 import sqlite3
 import re
+import json
 
 def remove_whitespace(s):
     return re.sub(r'\s+', '', s)

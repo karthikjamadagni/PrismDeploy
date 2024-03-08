@@ -374,7 +374,7 @@
                             <option value="{{ item }}">{{ item }}</option>
                             {% endfor %}
                         </select>
-                        <button type="submit" id="search-button">Compare</button>
+                        <button type="submit" id="search-button" onclick="storeComparators()">Compare</button>
                     </form>
                 </div>
                 <div id="main-content">
@@ -592,6 +592,14 @@
                 window.location.href = '/search?query=select * from ie_info where ie_name =';
 
             }
+        }
+
+        function storeComparators() {
+            let compare1 = document.getElementById('compare-filter1').value;
+            let compare2 = document.getElementById('compare-filter2').value;
+
+            localStorage.setItem('comparator1', compare1);
+            localStorage.setItem('comparator2', compare2);
         }
 
     // Call checkAndNavigate() when the page loads

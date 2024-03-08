@@ -316,7 +316,7 @@
 
 <div class="tab">
     <button id="tab1" class="tablinks active">Search</button>
-    <button id="tab2" class="tablinks" onclick="window.location.href='/compare'">Comparison</button>
+    <button id="tab2" class="tablinks" onclick="checkAndNavigate()">Comparison</button>
 <!--    <button id="tab2" class="tablinks" onclick="openTab(event, 'image2')">Comparison</button>-->
 </div>
 
@@ -600,7 +600,30 @@
         storeSearchData();
     });
 
-    
+    function checkAndNavigate() {
+            // Retrieve existing search data from local storage
+
+            var comparator1= localStorage.getItem('comparator1');
+            var comparator2 = localStorage.getItem('comparator2');
+
+            if (comparator1 && comparator2) {
+                let url = '/compare?version=' + encodeURIComponent(comparator1) + '&version2=' + encodeURIComponent(comparator2);
+                console.log(url);
+                window.location.href = url;
+            }
+
+
+
+            // Check if there is any search data
+            else {
+                // If no search data exists, do nothing or perform any other desired action
+                console.log('No existing search data found.');
+                window.location.href = '/compare';
+
+            }
+    }
+
+    // http://127.0.0.1:5000/compare?version1=17.1.0&version2=17.4.0
 
 
 
