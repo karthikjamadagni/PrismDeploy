@@ -59,7 +59,7 @@ for zip_link in zip_links:
     new_filename=parts[1]+str(parts[3])+"."+str(parts[4])
     # print(new_filename)
     version=str(parts[3])+"."+str(before)+"."+str(after)
-    if count<5:
+    if count<6:
         zip_url = urljoin(url, zip_link['href'])
         zip_filename = os.path.join(download_dir, os.path.basename(zip_url))
 
