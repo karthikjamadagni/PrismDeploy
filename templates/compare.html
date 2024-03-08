@@ -323,8 +323,8 @@
             }
 
             .card-container {
-                width: 100%;
-                display: flex;
+<!--                width: 100%;-->
+<!--                display: flex;-->
                 flex-direction: column;
                 gap: 0.5rem;
 
@@ -384,7 +384,7 @@
                     {% if results2 %}
                     {% for result in results2 %}
                     {% if result[1] == "Different in both versions" %}
-                    <div class="card-container">
+                    <div class="card-container" style ="display: flex; width:100%;">
                         <div id="{{ result[0] }}" class="card">
                             <strong>{{ result[0] }}</strong>
                             <button class="show-structure-button">...</button> </br>
