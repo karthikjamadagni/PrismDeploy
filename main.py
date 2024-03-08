@@ -1,3 +1,4 @@
+import subprocess
 from flask import Flask, render_template, request, redirect, flash, url_for
 from difflib import ndiff
 import sqlite3
@@ -104,6 +105,11 @@ def compare():
     # flag = True
     return render_template('compare.html', filters=filters, results2=results2)
 
+@app.route('/update', methods=['GET'])
+def update():
+    subprocess.run(["python", "fileDownloader.py"], check=True)
+    return "updated"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
