@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,20 +11,25 @@
             text-align: center;
             margin: 50px;
         }
+
         h1 {
             color: #333;
         }
+
         form {
             margin-top: 20px;
         }
+
         label {
             font-size: 18px;
             margin-right: 10px;
         }
+
         input {
             padding: 8px;
             font-size: 16px;
         }
+
         button {
             padding: 8px 15px;
             font-size: 16px;
@@ -32,6 +38,7 @@
             border: none;
             cursor: pointer;
         }
+
         #filter {
             padding: 8px;
             font-size: 16px;
@@ -51,21 +58,37 @@
             background-color: #fff;
             color: #333;
         }
-
     </style>
 </head>
+
 <body>
     <h1>IE Search</h1>
     <form action="/search" method="get">
-    <label for="query">Search for fields:</label>
-    <input type="text" id="query" name="query" required>
-    <select name="filter" id="filter">
-    <option value="" selected disabled>Select a filter</option>
-    {% for item in filters %}
-        <option value="{{ item }}">{{ item }}</option>
-    {% endfor %}
-</select>
-    <button type="submit">Search</button>
-</form>
+        <label for="query">Search for fields:</label>
+        <input type="text" id="query" name="query" required>
+        <select name="filter" id="filter">
+            <option value="" selected disabled>Select a filter</option>
+            {% for item in filters %}
+            <option value="{{ item }}">{{ item }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" onclick="storeSearchData()">Search</button>
+    </form>
 </body>
+
+<script>
+    // Function to store search query and filter in local storage
+    function storeSearchData() {
+        var query = document.getElementById('query').value;
+        var filter = document.getElementById('filter').value;
+        localStorage.setItem('searchQuery', query);
+        localStorage.setItem('searchFilter', filter);
+    }
+
+    // Call storeSearchData() when the search form is submitted
+    document.getElementById('searchForm').addEventListener('submit', function (event) {
+        storeSearchData();
+    });
+</script>
+
 </html>

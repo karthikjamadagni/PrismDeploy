@@ -313,14 +313,36 @@
                 margin-bottom: 1rem;
             }
         }
+
+        @media screen and (max-width: 400px) {
+            #main-content {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                flex-wrap: nowrap;
+            }
+
+            .card-container {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+            }
+
+            .card {
+                width: 90%;
+                margin-inline: auto;
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <div class="tab">
-        <button id="tab1" class="tablinks"
-            onclick="window.location.href='/search?query=select * from ie_info where ie_name ='">Search</button>
+        <button id="tab1" class="tablinks" onclick="checkAndNavigate()">Search</button>
         <!--    ?query=&filter='-->
         <button id="tab2" class="tablinks active">Comparison</button>
         <!--    <button id="tab2" class="tablinks" onclick="openTab(event, 'image2')">Comparison</button>-->
@@ -362,7 +384,7 @@
                     {% if results2 %}
                     {% for result in results2 %}
                     {% if result[1] == "Different in both versions" %}
-                    <div style="display: flex; width:100%;">
+                    <div class="card-container">
                         <div id="{{ result[0] }}" class="card">
                             <strong>{{ result[0] }}</strong>
                             <button class="show-structure-button">...</button> </br>
@@ -408,20 +430,20 @@
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
-    
+
                 // Remove highlight from previously selected card
                 var highlightedCard = document.querySelector('.card.highlighted');
                 if (highlightedCard) {
                     highlightedCard.classList.remove('highlighted');
                 }
-    
+
                 var targetId = this.getAttribute('href').substring(1);
                 var targetElement = document.getElementById(targetId);
-    
+
                 if (targetElement) {
                     // Add highlight to the selected card
                     targetElement.classList.add('highlighted');
-    
+
                     targetElement.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
@@ -429,7 +451,7 @@
                 }
             });
         });
-    
+
         document.querySelectorAll('.show-structure-button').forEach(function (button) {
             button.addEventListener('click', function () {
                 // Toggle the visibility of the structure (p.ie-structure)
@@ -439,37 +461,37 @@
                 }
             });
         });
-    
+
         // Hamburger Menu Script
         function toggleSidebar() {
             var container = document.getElementById('container');
             var sidebar = document.getElementById('sidebar');
             console.log('toggled')
-    
+
             container.classList.toggle('overlay');
             sidebar.style.width = sidebar.style.width === '70%' ? '0' : '70%';
         }
-    
+
         // Close sidebar when clicking outside in mobile mode
         document.addEventListener('click', function (e) {
             var container = document.getElementById('container');
             var sidebar = document.getElementById('sidebar');
             var hamburger = document.getElementById('hamburger');
-    
+
             if (container.classList.contains('overlay') && e.target !== sidebar && e.target !== hamburger) {
                 container.classList.remove('overlay');
                 sidebar.style.width = '0';
             }
         });
-    
+
         document.addEventListener('DOMContentLoaded', function () {
             var container = document.getElementById('container');
             var sidebar = document.getElementById('sidebar');
-    
+
             document.getElementById('comparison-form').addEventListener('submit', function (event) {
                 var version1 = document.getElementById('compare-filter1').value;
                 var version2 = document.getElementById('compare-filter2').value;
-    
+
                 // Ensure both dropdowns have values selected
                 if (version1 === "" || version2 === "") {
                     alert("Please select both versions.");
@@ -495,44 +517,44 @@
                 if (searchResults && window.location.pathname !== '/search') {
                     // Parse the search results from JSON
                     var results = JSON.parse(searchResults);
-    
+
                     // Display search results on the page
                     var searchContent = document.getElementById('image1');
                     var mainContent = searchContent.querySelector('#main-content');
                     mainContent.innerHTML = ''; // Clear existing content
-    
+
                     if (results.length > 0) {
                         // Populate search results on the page
                         results.forEach(function (result) {
                             var cardDiv = document.createElement('div');
                             cardDiv.setAttribute('class', 'card');
                             cardDiv.setAttribute('id', result[0]);
-    
+
                             var strongTag = document.createElement('strong');
                             strongTag.textContent = result[0];
                             cardDiv.appendChild(strongTag);
-    
+
                             var showStructureBtn = document.createElement('button');
                             showStructureBtn.setAttribute('class', 'show-structure-button');
                             showStructureBtn.textContent = '...';
                             cardDiv.appendChild(showStructureBtn);
-    
+
                             var content = document.createTextNode(result[1] + ' : ' + result[2] + ' ' + result[3]);
                             cardDiv.appendChild(content);
-    
+
                             if (result[4]) {
                                 var ieDescDiv = document.createElement('div');
                                 ieDescDiv.setAttribute('class', 'ie-desc');
                                 ieDescDiv.textContent = result[4];
                                 cardDiv.appendChild(ieDescDiv);
                             }
-    
+
                             var ieStructureDiv = document.createElement('div');
                             ieStructureDiv.setAttribute('class', 'ie-structure');
                             ieStructureDiv.setAttribute('style', 'white-space: pre-wrap;');
                             ieStructureDiv.textContent = result[5];
                             cardDiv.appendChild(ieStructureDiv);
-    
+
                             mainContent.appendChild(cardDiv);
                         });
                     } else {
@@ -540,11 +562,41 @@
                         mainContent.innerHTML = '<p>No results found.</p>';
                     }
                 }
-    
+
             });
         });
+
+        function checkAndNavigate() {
+            // Retrieve existing search data from local storage
+
+            var filter = localStorage.getItem('searchFilter');
+            var query = localStorage.getItem('searchQuery')
+
+            if (filter && query) {
+                let url = '/search?query=' + encodeURIComponent(query) + '&filter=' + encodeURIComponent(filter);
+                console.log(url);
+                window.location.href = url;
+            }
+
+            else if(query) {
+                let url = '/search?query=' + encodeURIComponent(query)
+                window.location.href = url;
+            }
+
+
+
+            // Check if there is any search data
+            else {
+                // If no search data exists, do nothing or perform any other desired action
+                console.log('No existing search data found.');
+                window.location.href = '/search?query=select * from ie_info where ie_name =';
+
+            }
+        }
+
+    // Call checkAndNavigate() when the page loads
     </script>
-    
+
 </body>
 
 </html>

@@ -335,14 +335,14 @@
         <div id="container">
             <div id="search-bar">
                 <form id="search-form" action="/search" method="get">
-                    <input type="text" id="query" name="query" placeholder="Search for field" required>
-                    <select name="filter" id="search-filter" class="filter">
+                    <input type="text" id="query" name="query" placeholder="Search for field" required class="input-query-to-be-stored">
+                    <select name="filter" id="filter" class="filter" class="input-filter-to-be-stored">
                         <option value="" selected disabled>Version</option>
                             {% for item in filters %}
                         <option value="{{ item }}">{{ item }}</option>
                         {% endfor %}
                     </select>
-                    <button type="submit" id="search-button">Search</button>
+                    <button type="submit" id="search-button" onclick="storeSearchData()">Search</button>
                 </form>
             </div>
             <div id="main-content">
@@ -424,7 +424,8 @@
 <!--        <div id="hamburger" onclick="toggleSidebar()">☰</div>-->
 <!--    </div>-->
 <!--</div>-->
-<script>
+<script> 
+
     document.querySelectorAll('a[href^="#"]').forEach(function (link) {
         link.addEventListener('click', function (e) {
             e.preventDefault();
@@ -584,6 +585,22 @@
             }
         }
     });
+
+
+    function storeSearchData() {
+        var query = document.getElementById('query').value;
+        var filter = document.getElementById('filter').value;
+        localStorage.setItem('searchQuery', query);
+        localStorage.setItem('searchFilter', filter);
+    }
+
+    // Call storeSearchData() when the search form is submitted
+    document.getElementById('search-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        storeSearchData();
+    });
+
+    
 
 
 
