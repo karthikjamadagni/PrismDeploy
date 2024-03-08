@@ -607,7 +607,7 @@
             var comparator2 = localStorage.getItem('comparator2');
 
             if (comparator1 && comparator2) {
-                let url = '/compare?version=' + encodeURIComponent(comparator1) + '&version2=' + encodeURIComponent(comparator2);
+                let url = '/compare?version1=' + encodeURIComponent(comparator1) + '&version2=' + encodeURIComponent(comparator2);
                 console.log(url);
                 window.location.href = url;
             }
